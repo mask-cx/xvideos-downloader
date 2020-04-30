@@ -1,5 +1,5 @@
 # xvideos-downloader
-xvideos Pornhub 视频下载工具,This Project was fork from [m3u8](https://octolinker-demo.now.sh/oopsguy/m3u8) .
+xvideos Pornhub Youtube 视频下载工具,This Project was fork from [m3u8](https://octolinker-demo.now.sh/oopsguy/m3u8) .
 
 
 # 使用 hls-downloader 获取视频 `m3u8` 下载地址
