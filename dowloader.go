@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
+	"time"
 	"math/rand"
 	"strconv"
 	"sync"
@@ -23,6 +24,7 @@ const (
 )
 
 func RandStringBytes(n int) string {
+	rand.Seed(time.Now().UnixNano())
     b := make([]byte, n)
     for i := range b {
         b[i] = letterBytes[rand.Intn(len(letterBytes))]
@@ -66,7 +68,7 @@ func NewTask(output string, url string) (*Downloader, error) {
 		return nil, fmt.Errorf("create ts folder '[%s]' failed: %s", tsFolder, err.Error())
 	}
 
-    err = ioutil.WriteFile(filepath.Join(folder, _taskid), []byte("Downloading..."), 0755)
+    err = ioutil.WriteFile(filepath.Join(folder, _taskid + ".ts.dl"), []byte("Downloading..."), 0755)
     if err != nil {
         fmt.Printf("Unable to write file: %v", err)
     }
@@ -215,10 +217,10 @@ func (d *Downloader) merge() error {
 		fmt.Printf("[warning] %d files missing\n", missingCount)
 	}
 
-	mergeTSFilename := _taskid
+	mergeTSFilename := _taskid + ".ts"
 	// Create a TS file for merging, all segment files will be written to this file.
 	mFilePath := filepath.Join(d.folder, mergeTSFilename)
-	os.Remove( mFilePath )
+	os.Remove( mFilePath + ".dl")
 	mFile, err := os.Create(mFilePath)
 	if err != nil {
 		return fmt.Errorf("create main TS file failed：%s", err.Error())
